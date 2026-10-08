@@ -7,6 +7,8 @@ ROWS, TARGET = 7, 2
 HOP_TIME, HOP_HEIGHT = 0.28, 26
 CELLS = {(r, c) for r in range(ROWS) for c in range(r + 1)}
 DEFAULT_PALETTE = [(90, 160, 220), (190, 120, 70), (100, 210, 140)]
+COMPLETION_FLASHES = {}
+COMPLETION_FLASH_MS = 300
 KEY_HOPS = {pygame.K_LEFT: (-1, -1), pygame.K_UP: (-1, 0), pygame.K_DOWN: (1, 0), pygame.K_RIGHT: (1, 1)}
 
 
@@ -23,7 +25,7 @@ def cube_palette(level):
 
 def on_cube_completed(cell):
     """Called when a cube first reaches its target colour; add a flash, sound, or bonus here."""
-    pass
+    COMPLETION_FLASHES[cell] = pygame.time.get_ticks() + COMPLETION_FLASH_MS
 
 
 def bonus_life_threshold():
@@ -173,6 +175,13 @@ class Game:
         cx, cy = cube_center(*cell)
         top = [(cx, cy - CUBE_H / 2), (cx + CUBE_W / 2, cy), (cx, cy + CUBE_H / 2), (cx - CUBE_W / 2, cy)]
         color = colors[self.stages[cell]]
+        flash_until = COMPLETION_FLASHES.get(cell, 0)
+        flash_remaining = flash_until - pygame.time.get_ticks()
+        if flash_remaining > 0:
+            strength = flash_remaining / COMPLETION_FLASH_MS
+            color = tuple(int(channel + (255 - channel) * strength) for channel in color)
+        else:
+            COMPLETION_FLASHES.pop(cell, None)
         left = [top[3], top[2], (cx, cy + CUBE_H / 2 + SIDE), (cx - CUBE_W / 2, cy + SIDE)]
         right = [top[1], top[2], (cx, cy + CUBE_H / 2 + SIDE), (cx + CUBE_W / 2, cy + SIDE)]
         pygame.draw.polygon(screen, shade(DEFAULT_PALETTE[0], 0.45), left)
