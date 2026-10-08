@@ -87,5 +87,5 @@ qbert/
 Submission is only the following three things:
 
 - [x] Before-gameplay video recorded (`SE_Lab_04_before.mp4`)
-- [ ] After-gameplay video showing the fixed pyramid and new features
+- [x] After-gameplay video showing the fixed pyramid and new features
 - [x] PDF export of the chat-history Markdown (`SE_Lab_04_chat_history.pdf`)
