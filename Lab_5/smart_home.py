@@ -5,12 +5,16 @@ a safe range, lists devices by room, reports power use and saves the home
 state to a JSON file.
 """
 import json
-import subprocess
+import os
+import subprocess  # nosec B404 - fixed argv list only, see run_scene
 
-HUB_HOST = "0.0.0.0"
+# Bind to loopback only; expose on the LAN deliberately via HUB_HOST if needed.
+HUB_HOST = os.environ.get("HUB_HOST", "127.0.0.1")
 HUB_PORT = 8080
 POWER_USAGE = {"light" : 10, "fan": 60, "thermostat": 1500, "tv": 120}
-HUB_PASSWORD = "smarthome-demo"
+# Secret comes from the environment, never from source control.
+HUB_PASSWORD = os.environ.get("HUB_PASSWORD", "")
+SCENES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "scenes")
 MIN_TEMP = 16
 MAX_TEMP = 30
 devices = {}
@@ -70,11 +74,17 @@ def hub_address():
 
 
 def run_scene(scene_script):
-    """Run a scene script from the scenes folder and return its exit code.
+    """Run a scene script from SCENES_DIR and return its exit code.
 
-    Helper kept for the lab: not called by the demo.
+    Helper kept for the lab: not called by the demo. Only a bare file name
+    inside SCENES_DIR is accepted (no paths, no "..").
     """
-    return subprocess.call("bash scenes/" + scene_script, shell=True)
+    script_path = os.path.join(SCENES_DIR, scene_script)
+    if os.path.basename(scene_script) != scene_script or \
+            not os.path.isfile(script_path):
+        raise ValueError("Unknown scene script: " + scene_script)
+    # Fixed argv list, no shell: user input can't inject extra commands.
+    return subprocess.call(["/bin/bash", script_path])  # nosec B603
 
 
 def main():
