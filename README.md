@@ -1,11 +1,9 @@
 # Software Engineering Lab
 
-|            |                          |
-| ---------- | ------------------------ |
-| **Name**   | Rahul Saran Sharma       |
-| **SRN**    | PES1UG24AM218            |
-| **Class**  | AIML-D                   |
-| **Course** | Software Engineering Lab |
+- **Name:** Rahul Saran Sharma
+- **SRN:** PES1UG24AM218
+- **Class:** AIML-D
+- **Course:** Software Engineering Lab
 
 This repository contains lab work organized by lab number. Each folder has its own `README.md` describing the submission.
 
