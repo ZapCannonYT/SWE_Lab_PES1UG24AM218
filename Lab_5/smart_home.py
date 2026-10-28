@@ -11,7 +11,7 @@ import subprocess  # nosec B404 - fixed argv list only, see run_scene
 # Bind to loopback only; expose on the LAN deliberately via HUB_HOST if needed.
 HUB_HOST = os.environ.get("HUB_HOST", "127.0.0.1")
 HUB_PORT = 8080
-POWER_USAGE = {"light" : 10, "fan": 60, "thermostat": 1500, "tv": 120}
+POWER_USAGE = {"light": 10, "fan": 60, "thermostat": 1500, "tv": 120}
 # Secret comes from the environment, never from source control.
 HUB_PASSWORD = os.environ.get("HUB_PASSWORD", "")
 SCENES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "scenes")
@@ -62,6 +62,7 @@ def power_usage():
     active = [info for info in devices.values() if info["on"]]
     return sum(POWER_USAGE.get(info["kind"], 0) for info in active)
 
+
 def save_state(file_name="home_state.json"):
     """Write the current device state to a JSON file."""
     with open(file_name, "w", encoding="utf-8") as state_file:
@@ -100,9 +101,10 @@ def main():
     set_temperature("Ceiling Light", 20)
     print("Bedroom devices:", devices_in_room("Bedroom"))
     print("Current power use (W):", power_usage())
-    print("Hub address:", hub_address())# for app setup
+    print("Hub address:", hub_address())  # for app setup
     print("Light settings:", devices["Ceiling Light"]["settings"])
-    print("Devices on:", [name for name, info in devices.items() if info["on"]])
+    print("Devices on:",
+          [name for name, info in devices.items() if info["on"]])
     save_state()
 
 
