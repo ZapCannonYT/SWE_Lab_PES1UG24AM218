@@ -16,6 +16,7 @@ This repository contains lab work organized by lab number. Each folder has its o
 | [Lab 3](Lab_3/) | Architecture & component diagram  | 09/09/2026 | Client-Server architecture chosen and justified, with a component diagram and an FR/NFR traceability table.                                                           |
 | [Lab 4](Lab_4/) | LLM-assisted debugging            | 08/10/2026 | Fixed the pyramid projection bug in a Pygame Q*bert clone and implemented three feature hooks, with before/after videos and the LLM chat history.                     |
 | [Lab 5](Lab_5/) | Static code analysis              | 28/10/2026 | Ran Pylint, Bandit and Flake8 on a smart home controller and fixed everything: Pylint 4.80 → 10.00, Bandit 4 → 0, Flake8 4 → 0.                                       |
+| [Lab 6](Lab_6/) | Code & branch coverage            | 28/10/2026 | Wrote pytest cases for a highway toll calculator: line coverage 46% → 100%, then branch coverage 96% → 100% by testing off-peak, no-FASTag and edge cases.            |
 
 ## Repository layout
 
@@ -25,5 +26,6 @@ This repository contains lab work organized by lab number. Each folder has its o
 ├── Lab_2/   # user stories (PDF)
 ├── Lab_3/   # architecture and component diagram (PDF)
 ├── Lab_4/   # game.py, videos, chat history
-└── Lab_5/   # smart_home.py, issue table, reflection, before/after reports
+├── Lab_5/   # smart_home.py, issue table, reflection, before/after reports
+└── Lab_6/   # highway_toll.py, code and branch coverage tests, screenshots
 ```
